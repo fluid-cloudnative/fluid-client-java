@@ -3,7 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.fluid-cloudnative</groupId>
     <artifactId>fluid-java-client</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <name>Fluid-Java-Client</name>
     <packaging>jar</packaging>
     <url>https://github.com/fluid-cloudnative/fluid-client-java</url>
     <description>Fluid Java Client</description>
