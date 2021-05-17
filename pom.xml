@@ -1,11 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>fluid-cloudnative.fluid</groupId>
+    <groupId>io.github.fluid-cloudnative</groupId>
     <artifactId>fluid-java-client</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>fluid-java-client</name>
-    <version>1.0.0</version>
     <url>https://github.com/fluid-cloudnative/fluid-client-java</url>
     <description>Fluid Java Client</description>
     <scm>
@@ -22,6 +21,19 @@
         </license>
     </licenses>
 
+
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <developers>
         <developer>
             <name>Rui Tang</name>
@@ -30,6 +42,7 @@
             <organizationUrl>https://github.com/fluid-cloudnative</organizationUrl>
         </developer>
     </developers>
+
 
     <build>
         <plugins>
