@@ -1,7 +1,10 @@
 
+
 # DataRestoreLocation
 
+DataRestoreLocation describes the spec restore location of  Dataset
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **nodeName** | **String** | NodeName describes the nodeName of restore if Path is  in the form of local://subpath |  [optional]

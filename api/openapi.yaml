@@ -1,0 +1,2886 @@
+openapi: 3.0.1
+info:
+  description: client for fluid
+  title: fluid
+  version: v0.1
+servers:
+- url: /
+paths: {}
+components:
+  schemas:
+    ".APIGatewayStatus":
+      description: API Gateway
+      properties:
+        endpoint:
+          description: Endpoint for accessing
+          type: string
+      type: object
+    ".AlluxioCompTemplateSpec":
+      description: AlluxioCompTemplateSpec is a description of the Alluxio commponents
+      properties:
+        enabled:
+          description: Enabled or Disabled for the components. For now, only  API
+            Gateway is enabled or disabled.
+          type: boolean
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by Alluxio component.
+            <br>
+          type: object
+        jvmOptions:
+          description: Options for JVM
+          items:
+            default: ""
+            type: string
+          type: array
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the master
+            to fit on a node
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        ports:
+          additionalProperties:
+            default: 0
+            format: int32
+            type: integer
+          description: 'Ports used by Alluxio(e.g. rpc: 19998 for master)'
+          type: object
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for the Alluxio component. <br> Refer
+            to <a href="https://docs.alluxio.io/os/user/stable/en/reference/Properties-List.html">Alluxio
+            Configuration Properties</a> for more info
+          type: object
+        replicas:
+          description: Replicas is the desired number of replicas of the given template.
+            If unspecified, defaults to 1. replicas is the min replicas of dataset
+            in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into the alluxio runtime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".AlluxioFuseSpec":
+      description: AlluxioFuseSpec is a description of the Alluxio Fuse
+      properties:
+        args:
+          description: Arguments that will be passed to Alluxio Fuse
+          items:
+            default: ""
+            type: string
+          type: array
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean Alluxio Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once the fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnRuntimeDeleted'
+          type: string
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by Alluxio Fuse
+          type: object
+        global:
+          description: If the fuse client should be deployed in global mode, otherwise
+            the affinity should be considered
+          type: boolean
+        image:
+          description: Image for Alluxio Fuse(e.g. alluxio/alluxio-fuse)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image Tag for Alluxio Fuse(e.g. 2.3.0-SNAPSHOT)
+          type: string
+        jvmOptions:
+          description: Options for JVM
+          items:
+            default: ""
+            type: string
+          type: array
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the fuse
+            client to fit on a node, this option only effect when global is enabled
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for Alluxio System. <br> Refer to <a
+            href="https://docs.alluxio.io/os/user/stable/en/reference/Properties-List.html">Alluxio
+            Configuration Properties</a> for more info
+          type: object
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into the alluxio runtime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".AlluxioRuntime":
+      description: AlluxioRuntime is the Schema for the alluxioruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.AlluxioRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".AlluxioRuntimeList":
+      description: AlluxioRuntimeList contains a list of AlluxioRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.AlluxioRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".AlluxioRuntimeSpec":
+      description: AlluxioRuntimeSpec defines the desired state of AlluxioRuntime
+      properties:
+        alluxioVersion:
+          $ref: '#/components/schemas/.VersionSpec'
+        apiGateway:
+          $ref: '#/components/schemas/.AlluxioCompTemplateSpec'
+        data:
+          $ref: '#/components/schemas/.Data'
+        disablePrometheus:
+          description: Disable monitoring for Alluxio Runtime Prometheus is enabled
+            by default
+          type: boolean
+        fuse:
+          $ref: '#/components/schemas/.AlluxioFuseSpec'
+        hadoopConfig:
+          description: Name of the configMap used to support HDFS configurations when
+            using HDFS as Alluxio's UFS. The configMap must be in the same namespace
+            with the AlluxioRuntime. The configMap should contain user-specific HDFS
+            conf files in it. For now, only "hdfs-site.xml" and "core-site.xml" are
+            supported. It must take the filename of the conf file as the key and content
+            of the file as the value.
+          type: string
+        initUsers:
+          $ref: '#/components/schemas/.InitUsersSpec'
+        jobMaster:
+          $ref: '#/components/schemas/.AlluxioCompTemplateSpec'
+        jobWorker:
+          $ref: '#/components/schemas/.AlluxioCompTemplateSpec'
+        jvmOptions:
+          description: Options for JVM
+          items:
+            default: ""
+            type: string
+          type: array
+        management:
+          $ref: '#/components/schemas/.RuntimeManagement'
+        master:
+          $ref: '#/components/schemas/.AlluxioCompTemplateSpec'
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for Alluxio system. <br> Refer to <a
+            href="https://docs.alluxio.io/os/user/stable/en/reference/Properties-List.html">Alluxio
+            Configuration Properties</a> for more info
+          type: object
+        replicas:
+          description: The replicas of the worker, need to be specified
+          format: int32
+          type: integer
+        runAs:
+          $ref: '#/components/schemas/.User'
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        volumes:
+          description: Volumes is the list of Kubernetes volumes that can be mounted
+            by the alluxio runtime components and/or fuses.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+        worker:
+          $ref: '#/components/schemas/.AlluxioCompTemplateSpec'
+      type: object
+    ".CacheableNodeAffinity":
+      description: CacheableNodeAffinity defines constraints that limit what nodes
+        this dataset can be cached to.
+      properties:
+        required:
+          $ref: '#/components/schemas/v1.NodeSelector'
+      type: object
+    ".CleanCachePolicy":
+      description: CleanCachePolicy defines policies when cleaning cache
+      properties:
+        gracePeriodSeconds:
+          description: Optional duration in seconds the cache needs to clean gracefully.
+            May be decreased in delete runtime request. Value must be non-negative
+            integer. The value zero indicates clean immediately via the timeout command
+            (no opportunity to shut down). If this value is nil, the default grace
+            period will be used instead. The grace period is the duration in seconds
+            after the processes running in the pod are sent a termination signal and
+            the time when the processes are forcibly halted with timeout command.
+            Set this value longer than the expected cleanup time for your process.
+          format: int32
+          type: integer
+        maxRetryAttempts:
+          description: Optional max retry Attempts when cleanCache function returns
+            an error after execution, runtime attempts to run it three more times
+            by default. With Maximum Retry Attempts, you can customize the maximum
+            number of retries. This gives you the option to continue processing retries.
+          format: int32
+          type: integer
+      type: object
+    ".Condition":
+      description: Condition explains the transitions on phase
+      properties:
+        lastProbeTime:
+          $ref: '#/components/schemas/v1.Time'
+        lastTransitionTime:
+          $ref: '#/components/schemas/v1.Time'
+        message:
+          description: Message is a human-readable message indicating details about
+            the transition
+          type: string
+        reason:
+          description: Reason for the condition's last transition
+          type: string
+        status:
+          default: ""
+          description: Status of the condition, one of `True`, `False` or `Unknown`
+          type: string
+        type:
+          default: ""
+          description: Type of condition, either `Complete` or `Failed`
+          type: string
+      required:
+      - status
+      - type
+      type: object
+    ".Data":
+      description: Data management strategies
+      properties:
+        pin:
+          default: false
+          description: Pin the dataset or not. Refer to <a href="https://docs.alluxio.io/os/user/stable/en/operation/User-CLI.html#pin">Alluxio
+            User-CLI pin</a>
+          type: boolean
+        replicas:
+          default: 0
+          description: The copies of the dataset
+          format: int32
+          type: integer
+      type: object
+    ".DataBackup":
+      description: DataBackup is the Schema for the backup API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.DataBackupSpec'
+        status:
+          $ref: '#/components/schemas/.OperationStatus'
+      type: object
+    ".DataBackupList":
+      description: DataBackupList contains a list of DataBackup
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.DataBackup'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".DataBackupSpec":
+      description: DataBackupSpec defines the desired state of DataBackup
+      properties:
+        backupPath:
+          description: BackupPath defines the target path to save data of the DataBackup
+          type: string
+        dataset:
+          description: Dataset defines the target dataset of the DataBackup
+          type: string
+        runAfter:
+          $ref: '#/components/schemas/.OperationRef'
+        runAs:
+          $ref: '#/components/schemas/.User'
+        ttlSecondsAfterFinished:
+          description: TTLSecondsAfterFinished is the time second to clean up data
+            operations after finished or failed
+          format: int32
+          type: integer
+      type: object
+    ".DataLoad":
+      description: DataLoad is the Schema for the dataloads API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.DataLoadSpec'
+        status:
+          $ref: '#/components/schemas/.OperationStatus'
+      type: object
+    ".DataLoadList":
+      description: DataLoadList contains a list of DataLoad
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.DataLoad'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".DataLoadSpec":
+      description: DataLoadSpec defines the desired state of DataLoad
+      properties:
+        affinity:
+          $ref: '#/components/schemas/v1.Affinity'
+        dataset:
+          $ref: '#/components/schemas/.TargetDataset'
+        loadMetadata:
+          description: LoadMetadata specifies if the dataload job should load metadata
+          type: boolean
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector defiens node selector for DataLoad pod
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Options specifies the extra dataload properties for runtime
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        policy:
+          description: including Once, Cron, OnEvent
+          type: string
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        runAfter:
+          $ref: '#/components/schemas/.OperationRef'
+        schedule:
+          description: The schedule in Cron format, only set when policy is cron,
+            see https://en.wikipedia.org/wiki/Cron.
+          type: string
+        schedulerName:
+          description: SchedulerName sets the scheduler to be used for DataLoad pod
+          type: string
+        target:
+          description: Target defines target paths that needs to be loaded
+          items:
+            $ref: '#/components/schemas/.TargetPath'
+          type: array
+        tolerations:
+          description: Tolerations defines tolerations for DataLoad pod
+          items:
+            $ref: '#/components/schemas/v1.Toleration'
+          type: array
+        ttlSecondsAfterFinished:
+          description: TTLSecondsAfterFinished is the time second to clean up data
+            operations after finished or failed
+          format: int32
+          type: integer
+      type: object
+    ".DataMigrate":
+      description: DataMigrate is the Schema for the datamigrates API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.DataMigrateSpec'
+        status:
+          $ref: '#/components/schemas/.OperationStatus'
+      type: object
+    ".DataMigrateList":
+      description: DataMigrateList contains a list of DataMigrate
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.DataMigrate'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".DataMigrateSpec":
+      description: DataMigrateSpec defines the desired state of DataMigrate
+      properties:
+        affinity:
+          $ref: '#/components/schemas/v1.Affinity'
+        block:
+          description: if dataMigrate blocked dataset usage, default is false
+          type: boolean
+        from:
+          $ref: '#/components/schemas/.DataToMigrate'
+        image:
+          description: Image (e.g. alluxio/alluxio)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image tag (e.g. 2.3.0-SNAPSHOT)
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector defiens node selector for DataLoad pod
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: options for migrate, different for each runtime
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        policy:
+          description: policy for migrate, including Once, Cron, OnEvent
+          type: string
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        runAfter:
+          $ref: '#/components/schemas/.OperationRef'
+        runtimeType:
+          description: using which runtime to migrate data; if none, take dataset
+            runtime as default
+          type: string
+        schedule:
+          description: The schedule in Cron format, only set when policy is cron,
+            see https://en.wikipedia.org/wiki/Cron.
+          type: string
+        schedulerName:
+          description: SchedulerName sets the scheduler to be used for DataLoad pod
+          type: string
+        to:
+          $ref: '#/components/schemas/.DataToMigrate'
+        tolerations:
+          description: Tolerations defines tolerations for DataLoad pod
+          items:
+            $ref: '#/components/schemas/v1.Toleration'
+          type: array
+        ttlSecondsAfterFinished:
+          description: TTLSecondsAfterFinished is the time second to clean up data
+            operations after finished or failed
+          format: int32
+          type: integer
+      required:
+      - from
+      - to
+      type: object
+    ".DataProcess":
+      description: DataProcess is the Schema for the dataprocesses API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.DataProcessSpec'
+        status:
+          $ref: '#/components/schemas/.OperationStatus'
+      type: object
+    ".DataProcessList":
+      description: DataProcessList contains a list of DataProcess
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.DataProcess'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".DataProcessSpec":
+      description: DataProcessSpec defines the desired state of DataProcess
+      properties:
+        dataset:
+          $ref: '#/components/schemas/.TargetDatasetWithMountPath'
+        processor:
+          $ref: '#/components/schemas/.Processor'
+        runAfter:
+          $ref: '#/components/schemas/.OperationRef'
+        ttlSecondsAfterFinished:
+          description: TTLSecondsAfterFinished is the time second to clean up data
+            operations after finished or failed
+          format: int32
+          type: integer
+      required:
+      - dataset
+      - processor
+      type: object
+    ".DataRestoreLocation":
+      description: DataRestoreLocation describes the spec restore location of  Dataset
+      properties:
+        nodeName:
+          description: NodeName describes the nodeName of restore if Path is  in the
+            form of local://subpath
+          type: string
+        path:
+          description: Path describes the path of restore, in the form of  local://subpath
+            or pvc://<pvcName>/subpath
+          type: string
+      type: object
+    ".DataToMigrate":
+      properties:
+        dataset:
+          $ref: '#/components/schemas/.DatasetToMigrate'
+        externalStorage:
+          $ref: '#/components/schemas/.ExternalStorage'
+      type: object
+    ".Dataset":
+      description: Dataset is the Schema for the datasets API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.DatasetSpec'
+        status:
+          $ref: '#/components/schemas/.DatasetStatus'
+      type: object
+    ".DatasetCondition":
+      description: Condition describes the state of the cache at a certain point.
+      properties:
+        lastTransitionTime:
+          $ref: '#/components/schemas/v1.Time'
+        lastUpdateTime:
+          $ref: '#/components/schemas/v1.Time'
+        message:
+          description: A human readable message indicating details about the transition.
+          type: string
+        reason:
+          description: The reason for the condition's last transition.
+          type: string
+        status:
+          default: ""
+          description: Status of the condition, one of True, False, Unknown.
+          type: string
+        type:
+          default: ""
+          description: Type of cache condition.
+          type: string
+      required:
+      - status
+      - type
+      type: object
+    ".DatasetList":
+      description: DatasetList contains a list of Dataset
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.Dataset'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".DatasetSpec":
+      description: DatasetSpec defines the desired state of Dataset
+      properties:
+        accessModes:
+          description: AccessModes contains all ways the volume backing the PVC can
+            be mounted
+          items:
+            default: ""
+            type: string
+          type: array
+        dataRestoreLocation:
+          $ref: '#/components/schemas/.DataRestoreLocation'
+        mounts:
+          description: Mount Points to be mounted on Alluxio.
+          items:
+            $ref: '#/components/schemas/.Mount'
+          type: array
+        nodeAffinity:
+          $ref: '#/components/schemas/.CacheableNodeAffinity'
+        owner:
+          $ref: '#/components/schemas/.User'
+        placement:
+          description: Manage switch for opening Multiple datasets single node deployment
+            or not
+          type: string
+        runtimes:
+          description: Runtimes for supporting dataset (e.g. AlluxioRuntime)
+          items:
+            $ref: '#/components/schemas/.Runtime'
+          type: array
+        sharedEncryptOptions:
+          description: SharedEncryptOptions is the encryptOption to all mount
+          items:
+            $ref: '#/components/schemas/.EncryptOption'
+          type: array
+        sharedOptions:
+          additionalProperties:
+            default: ""
+            type: string
+          description: SharedOptions is the options to all mount
+          type: object
+        tolerations:
+          description: If specified, the pod's tolerations.
+          items:
+            $ref: '#/components/schemas/v1.Toleration'
+          type: array
+      required:
+      - mounts
+      type: object
+    ".DatasetStatus":
+      description: DatasetStatus defines the observed state of Dataset
+      properties:
+        cacheStates:
+          additionalProperties:
+            default: ""
+            type: string
+          description: CacheStatus represents the total resources of the dataset.
+          type: object
+        conditions:
+          description: Conditions is an array of current observed conditions.
+          items:
+            $ref: '#/components/schemas/.DatasetCondition'
+          type: array
+        dataBackupRef:
+          description: DataBackupRef specifies the running Backup job that targets
+            this Dataset. This is mainly used as a lock to prevent concurrent DataBackup
+            jobs. Deprecated, use OperationRef instead
+          type: string
+        dataLoadRef:
+          description: DataLoadRef specifies the running DataLoad job that targets
+            this Dataset. This is mainly used as a lock to prevent concurrent DataLoad
+            jobs. Deprecated, use OperationRef instead
+          type: string
+        datasetRef:
+          description: DatasetRef specifies the datasets namespaced name mounting
+            this Dataset.
+          items:
+            default: ""
+            type: string
+          type: array
+        fileNum:
+          description: FileNum represents the file numbers of the dataset
+          type: string
+        hcfs:
+          $ref: '#/components/schemas/.HCFSStatus'
+        mounts:
+          description: the info of mount points have been mounted
+          items:
+            $ref: '#/components/schemas/.Mount'
+          type: array
+        operationRef:
+          additionalProperties:
+            default: ""
+            type: string
+          description: OperationRef specifies the Operation that targets this Dataset.
+            This is mainly used as a lock to prevent concurrent same Operation jobs.
+          type: object
+        phase:
+          description: 'Dataset Phase. One of the four phases: `Pending`, `Bound`,
+            `NotBound` and `Failed`'
+          type: string
+        runtimes:
+          description: Runtimes for supporting dataset
+          items:
+            $ref: '#/components/schemas/.Runtime'
+          type: array
+        ufsTotal:
+          description: Total in GB of dataset in the cluster
+          type: string
+      required:
+      - conditions
+      type: object
+    ".DatasetToMigrate":
+      properties:
+        name:
+          default: ""
+          description: name of dataset
+          type: string
+        namespace:
+          default: ""
+          description: namespace of dataset
+          type: string
+        path:
+          description: path to migrate
+          type: string
+      required:
+      - name
+      - namespace
+      type: object
+    ".EFCCompTemplateSpec":
+      description: EFCCompTemplateSpec is a description of the EFC components
+      properties:
+        disabled:
+          description: Enabled or Disabled for the components. Default enable.
+          type: boolean
+        networkMode:
+          description: Whether to use host network or not.
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the component
+            to fit on a node.
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        ports:
+          additionalProperties:
+            default: 0
+            format: int32
+            type: integer
+          description: 'Ports used by EFC(e.g. rpc: 19998 for master).'
+          type: object
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for the EFC component.
+          type: object
+        replicas:
+          description: Replicas is the desired number of replicas of the given template.
+            If unspecified, defaults to 1. replicas is the min replicas of dataset
+            in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        version:
+          $ref: '#/components/schemas/.VersionSpec'
+      type: object
+    ".EFCFuseSpec":
+      description: EFCFuseSpec is a description of the EFC Fuse
+      properties:
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean EFC Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once th fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnRuntimeDeleted'
+          type: string
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the fuse
+            client to fit on a node, this option only effect when global is enabled
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for EFC fuse
+          type: object
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        version:
+          $ref: '#/components/schemas/.VersionSpec'
+      type: object
+    ".EFCRuntime":
+      description: EFCRuntime is the Schema for the efcruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.EFCRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".EFCRuntimeList":
+      description: EFCRuntimeList contains a list of EFCRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.EFCRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".EFCRuntimeSpec":
+      description: EFCRuntimeSpec defines the desired state of EFCRuntime
+      properties:
+        cleanCachePolicy:
+          $ref: '#/components/schemas/.CleanCachePolicy'
+        fuse:
+          $ref: '#/components/schemas/.EFCFuseSpec'
+        initFuse:
+          $ref: '#/components/schemas/.InitFuseSpec'
+        master:
+          $ref: '#/components/schemas/.EFCCompTemplateSpec'
+        osAdvise:
+          $ref: '#/components/schemas/.OSAdvise'
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        replicas:
+          description: The replicas of the worker, need to be specified
+          format: int32
+          type: integer
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        worker:
+          $ref: '#/components/schemas/.EFCCompTemplateSpec'
+      type: object
+    ".EncryptOption":
+      properties:
+        name:
+          description: The name of encryptOption
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/.EncryptOptionSource'
+      type: object
+    ".EncryptOptionSource":
+      properties:
+        secretKeyRef:
+          $ref: '#/components/schemas/.SecretKeySelector'
+      type: object
+    ".ExternalEndpointSpec":
+      description: ExternalEndpointSpec defines the configurations for external etcd
+        cluster
+      properties:
+        encryptOptions:
+          description: encrypt info for accessing the external etcd cluster
+          items:
+            $ref: '#/components/schemas/.EncryptOption'
+          type: array
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: |-
+            Configurable options for External Etcd cluster. Support the following options.
+
+              etcd.prefix: (String) the prefix of etcd key for vineyard objects
+
+            Default value is as follows.
+
+              etcd.prefix: "/vineyard"
+          type: object
+        uri:
+          default: ""
+          description: URI specifies the endpoint of external Etcd cluster E,g. "etcd-svc.etcd-namespace.svc.cluster.local:2379"
+            Default is not set and use http protocol to connect to external etcd cluster
+          type: string
+      type: object
+    ".ExternalStorage":
+      properties:
+        encryptOptions:
+          description: encrypt info for external storage
+          items:
+            $ref: '#/components/schemas/.EncryptOption'
+          type: array
+        uri:
+          default: ""
+          description: type of external storage, including s3, oss, gcs, ceph, nfs,
+            pvc, etc. (related to runtime)
+          type: string
+      required:
+      - uri
+      type: object
+    ".GooseFSCompTemplateSpec":
+      description: GooseFSCompTemplateSpec is a description of the GooseFS commponents
+      properties:
+        annotations:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'Annotations is an unstructured key value map stored with a
+            resource that may be set by external tools to store and retrieve arbitrary
+            metadata. They are not queryable and should be preserved when modifying
+            objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+          type: object
+        enabled:
+          description: Enabled or Disabled for the components. For now, only  API
+            Gateway is enabled or disabled.
+          type: boolean
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by GooseFS component.
+            <br>
+          type: object
+        jvmOptions:
+          description: Options for JVM
+          items:
+            default: ""
+            type: string
+          type: array
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the master
+            to fit on a node
+          type: object
+        ports:
+          additionalProperties:
+            default: 0
+            format: int32
+            type: integer
+          description: 'Ports used by GooseFS(e.g. rpc: 19998 for master)'
+          type: object
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for the GOOSEFS component. <br> Refer
+            to <a href="https://cloud.tencent.com/document/product/436/56415">GOOSEFS
+            Configuration Properties</a> for more info
+          type: object
+        replicas:
+          description: Replicas is the desired number of replicas of the given template.
+            If unspecified, defaults to 1. replicas is the min replicas of dataset
+            in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+      type: object
+    ".GooseFSFuseSpec":
+      description: GooseFSFuseSpec is a description of the GooseFS Fuse
+      properties:
+        annotations:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'Annotations is an unstructured key value map stored with a
+            resource that may be set by external tools to store and retrieve arbitrary
+            metadata. They are not queryable and should be preserved when modifying
+            objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+          type: object
+        args:
+          description: Arguments that will be passed to GooseFS Fuse
+          items:
+            default: ""
+            type: string
+          type: array
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean GooseFS Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once th fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnRuntimeDeleted'
+          type: string
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by GooseFS Fuse
+          type: object
+        global:
+          description: If the fuse client should be deployed in global mode, otherwise
+            the affinity should be considered
+          type: boolean
+        image:
+          description: Image for GooseFS Fuse(e.g. goosefs/goosefs-fuse)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image Tag for GooseFS Fuse(e.g. v1.0.1)
+          type: string
+        jvmOptions:
+          description: Options for JVM
+          items:
+            default: ""
+            type: string
+          type: array
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the fuse
+            client to fit on a node, this option only effect when global is enabled
+          type: object
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for the GOOSEFS component. <br> Refer
+            to <a href="https://cloud.tencent.com/document/product/436/56415">GOOSEFS
+            Configuration Properties</a> for more info
+          type: object
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+      type: object
+    ".GooseFSRuntime":
+      description: GooseFSRuntime is the Schema for the goosefsruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.GooseFSRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".GooseFSRuntimeList":
+      description: GooseFSRuntimeList contains a list of GooseFSRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.GooseFSRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".GooseFSRuntimeSpec":
+      description: GooseFSRuntimeSpec defines the desired state of GooseFSRuntime
+      properties:
+        apiGateway:
+          $ref: '#/components/schemas/.GooseFSCompTemplateSpec'
+        cleanCachePolicy:
+          $ref: '#/components/schemas/.CleanCachePolicy'
+        data:
+          $ref: '#/components/schemas/.Data'
+        disablePrometheus:
+          description: Disable monitoring for GooseFS Runtime Prometheus is enabled
+            by default
+          type: boolean
+        fuse:
+          $ref: '#/components/schemas/.GooseFSFuseSpec'
+        goosefsVersion:
+          $ref: '#/components/schemas/.VersionSpec'
+        hadoopConfig:
+          description: Name of the configMap used to support HDFS configurations when
+            using HDFS as GooseFS's UFS. The configMap must be in the same namespace
+            with the GooseFSRuntime. The configMap should contain user-specific HDFS
+            conf files in it. For now, only "hdfs-site.xml" and "core-site.xml" are
+            supported. It must take the filename of the conf file as the key and content
+            of the file as the value.
+          type: string
+        initUsers:
+          $ref: '#/components/schemas/.InitUsersSpec'
+        jobMaster:
+          $ref: '#/components/schemas/.GooseFSCompTemplateSpec'
+        jobWorker:
+          $ref: '#/components/schemas/.GooseFSCompTemplateSpec'
+        jvmOptions:
+          description: Options for JVM
+          items:
+            default: ""
+            type: string
+          type: array
+        master:
+          $ref: '#/components/schemas/.GooseFSCompTemplateSpec'
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for the GOOSEFS component. <br> Refer
+            to <a href="https://cloud.tencent.com/document/product/436/56415">GOOSEFS
+            Configuration Properties</a> for more info
+          type: object
+        replicas:
+          description: The replicas of the worker, need to be specified
+          format: int32
+          type: integer
+        runAs:
+          $ref: '#/components/schemas/.User'
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        worker:
+          $ref: '#/components/schemas/.GooseFSCompTemplateSpec'
+      type: object
+    ".HCFSStatus":
+      description: HCFS Endpoint info
+      properties:
+        endpoint:
+          description: Endpoint for accessing
+          type: string
+        underlayerFileSystemVersion:
+          description: Underlayer HCFS Compatible Version
+          type: string
+      type: object
+    ".InitFuseSpec":
+      description: InitFuseSpec is a description of initialize the fuse kernel module
+        for runtime
+      properties:
+        version:
+          $ref: '#/components/schemas/.VersionSpec'
+      type: object
+    ".InitUsersSpec":
+      description: InitUsersSpec is a description of the initialize the users for
+        runtime
+      properties:
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by initialize the users
+            for runtime
+          type: object
+        image:
+          description: Image for initialize the users for runtime(e.g. alluxio/alluxio-User
+            init)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image Tag for initialize the users for runtime(e.g. 2.3.0-SNAPSHOT)
+          type: string
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+      type: object
+    ".JindoCompTemplateSpec":
+      description: JindoCompTemplateSpec is a description of the Jindo commponents
+      properties:
+        disabled:
+          description: If disable JindoFS master or worker
+          type: boolean
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by Jindo component.
+            <br>
+          type: object
+        labels:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'Labels will be added on JindoFS Master or Worker pods. DEPRECATED:
+            This is a deprecated field. Please use PodMetadata instead. Note: this
+            field is set to be exclusive with PodMetadata.Labels'
+          type: object
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the master
+            to fit on a node
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        ports:
+          additionalProperties:
+            default: 0
+            format: int32
+            type: integer
+          type: object
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for the Jindo component. <br>
+          type: object
+        replicas:
+          description: Replicas is the desired number of replicas of the given template.
+            If unspecified, defaults to 1. replicas is the min replicas of dataset
+            in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        tolerations:
+          description: If specified, the pod's tolerations.
+          items:
+            $ref: '#/components/schemas/v1.Toleration'
+          type: array
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into the jindo runtime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".JindoFuseSpec":
+      description: JindoFuseSpec is a description of the Jindo Fuse
+      properties:
+        args:
+          description: Arguments that will be passed to Jindo Fuse
+          items:
+            default: ""
+            type: string
+          type: array
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean JindoFS Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once th fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnRuntimeDeleted'
+          type: string
+        disabled:
+          description: If disable JindoFS fuse
+          type: boolean
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by Jindo Fuse
+          type: object
+        global:
+          description: If the fuse client should be deployed in global mode, otherwise
+            the affinity should be considered
+          type: boolean
+        image:
+          description: Image for Jindo Fuse(e.g. jindo/jindo-fuse)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image Tag for Jindo Fuse(e.g. 2.3.0-SNAPSHOT)
+          type: string
+        labels:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'Labels will be added on all the JindoFS pods. DEPRECATED:
+            this is a deprecated field. Please use PodMetadata.Labels instead. Note:
+            this field is set to be exclusive with PodMetadata.Labels'
+          type: object
+        logConfig:
+          additionalProperties:
+            default: ""
+            type: string
+          type: object
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the fuse
+            client to fit on a node, this option only effect when global is enabled
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for Jindo System. <br>
+          type: object
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        tolerations:
+          description: If specified, the pod's tolerations.
+          items:
+            $ref: '#/components/schemas/v1.Toleration'
+          type: array
+      type: object
+    ".JindoRuntime":
+      description: JindoRuntime is the Schema for the jindoruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.JindoRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".JindoRuntimeList":
+      description: JindoRuntimeList contains a list of JindoRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.JindoRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".JindoRuntimeSpec":
+      description: JindoRuntimeSpec defines the desired state of JindoRuntime
+      properties:
+        cleanCachePolicy:
+          $ref: '#/components/schemas/.CleanCachePolicy'
+        fuse:
+          $ref: '#/components/schemas/.JindoFuseSpec'
+        hadoopConfig:
+          description: Name of the configMap used to support HDFS configurations when
+            using HDFS as Jindo's UFS. The configMap must be in the same namespace
+            with the JindoRuntime. The configMap should contain user-specific HDFS
+            conf files in it. For now, only "hdfs-site.xml" and "core-site.xml" are
+            supported. It must take the filename of the conf file as the key and content
+            of the file as the value.
+          type: string
+        jindoVersion:
+          $ref: '#/components/schemas/.VersionSpec'
+        labels:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'Labels will be added on all the JindoFS pods. DEPRECATED:
+            this is a deprecated field. Please use PodMetadata.Labels instead. Note:
+            this field is set to be exclusive with PodMetadata.Labels'
+          type: object
+        logConfig:
+          additionalProperties:
+            default: ""
+            type: string
+          type: object
+        master:
+          $ref: '#/components/schemas/.JindoCompTemplateSpec'
+        networkmode:
+          description: Whether to use hostnetwork or not
+          type: string
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        properties:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Configurable properties for Jindo system. <br>
+          type: object
+        replicas:
+          description: The replicas of the worker, need to be specified
+          format: int32
+          type: integer
+        runAs:
+          $ref: '#/components/schemas/.User'
+        secret:
+          type: string
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        user:
+          type: string
+        volumes:
+          description: Volumes is the list of Kubernetes volumes that can be mounted
+            by the jindo runtime components and/or fuses.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+        worker:
+          $ref: '#/components/schemas/.JindoCompTemplateSpec'
+      type: object
+    ".JobProcessor":
+      properties:
+        podSpec:
+          $ref: '#/components/schemas/v1.PodSpec'
+      type: object
+    ".JuiceFSCompTemplateSpec":
+      description: JuiceFSCompTemplateSpec is a description of the JuiceFS components
+      properties:
+        enabled:
+          description: Enabled or Disabled for the components.
+          type: boolean
+        env:
+          description: Environment variables that will be used by JuiceFS component.
+          items:
+            $ref: '#/components/schemas/v1.EnvVar'
+          type: array
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Options
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        ports:
+          description: Ports used by JuiceFS
+          items:
+            $ref: '#/components/schemas/v1.ContainerPort'
+          type: array
+        replicas:
+          description: Replicas is the desired number of replicas of the given template.
+            If unspecified, defaults to 1. replicas is the min replicas of dataset
+            in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into runtime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".JuiceFSFuseSpec":
+      properties:
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean Juicefs Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once th fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnDemand'
+          type: string
+        env:
+          description: Environment variables that will be used by JuiceFS Fuse
+          items:
+            $ref: '#/components/schemas/v1.EnvVar'
+          type: array
+        global:
+          description: If the fuse client should be deployed in global mode, otherwise
+            the affinity should be considered
+          type: boolean
+        image:
+          description: Image for JuiceFS fuse
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image for JuiceFS fuse
+          type: string
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the fuse
+            client to fit on a node, this option only effect when global is enabled
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Options mount options that fuse pod will use
+          type: object
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into runtime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".JuiceFSRuntime":
+      description: JuiceFSRuntime is the Schema for the juicefsruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.JuiceFSRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".JuiceFSRuntimeList":
+      description: JuiceFSRuntimeList contains a list of JuiceFSRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.JuiceFSRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".JuiceFSRuntimeSpec":
+      description: JuiceFSRuntimeSpec defines the desired state of JuiceFSRuntime
+      properties:
+        cleanCachePolicy:
+          $ref: '#/components/schemas/.CleanCachePolicy'
+        configs:
+          description: Configs of JuiceFS
+          items:
+            default: ""
+            type: string
+          type: array
+        disablePrometheus:
+          description: Disable monitoring for JuiceFS Runtime Prometheus is enabled
+            by default
+          type: boolean
+        fuse:
+          $ref: '#/components/schemas/.JuiceFSFuseSpec'
+        initUsers:
+          $ref: '#/components/schemas/.InitUsersSpec'
+        jobWorker:
+          $ref: '#/components/schemas/.JuiceFSCompTemplateSpec'
+        juicefsVersion:
+          $ref: '#/components/schemas/.VersionSpec'
+        master:
+          $ref: '#/components/schemas/.JuiceFSCompTemplateSpec'
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        replicas:
+          description: The replicas of the worker, need to be specified
+          format: int32
+          type: integer
+        runAs:
+          $ref: '#/components/schemas/.User'
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        volumes:
+          description: Volumes is the list of Kubernetes volumes that can be mounted
+            by the alluxio runtime components and/or fuses.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+        worker:
+          $ref: '#/components/schemas/.JuiceFSCompTemplateSpec'
+      type: object
+    ".Level":
+      description: Level describes configurations a tier needs. <br> Refer to <a href="https://docs.alluxio.io/os/user/stable/en/core-services/Caching.html#configuring-tiered-storage">Configuring
+        Tiered Storage</a> for more info
+      properties:
+        high:
+          description: Ratio of high watermark of the tier (e.g. 0.9)
+          type: string
+        low:
+          description: Ratio of low watermark of the tier (e.g. 0.7)
+          type: string
+        mediumtype:
+          default: ""
+          description: 'Medium Type of the tier. One of the three types: `MEM`, `SSD`,
+            `HDD`'
+          type: string
+        path:
+          description: 'File paths to be used for the tier. Multiple paths are supported.
+            Multiple paths should be separated with comma. For example: "/mnt/cache1,/mnt/cache2".'
+          type: string
+        quota:
+          $ref: '#/components/schemas/k8s.io.apimachinery.pkg.api.resource.Quantity'
+        quotaList:
+          description: QuotaList are quotas used to set quota on multiple paths. Quotas
+            should be separated with comma. Quotas in this list will be set to paths
+            with the same order in Path. For example, with Path defined with "/mnt/cache1,/mnt/cache2"
+            and QuotaList set to "100Gi, 50Gi", then we get 100GiB cache storage under
+            "/mnt/cache1" and 50GiB under "/mnt/cache2". Also note that num of quotas
+            must be consistent with the num of paths defined in Path.
+          type: string
+        volumeSource:
+          $ref: '#/components/schemas/.VolumeSource'
+        volumeType:
+          default: ""
+          description: 'VolumeType is the volume type of the tier. Should be one of
+            the three types: `hostPath`, `emptyDir` and `volumeTemplate`. If not set,
+            defaults to hostPath.'
+          type: string
+      required:
+      - mediumtype
+      type: object
+    ".MasterSpec":
+      description: MasterSpec defines the configurations for Vineyard Master component
+        which is also regarded as the Etcd component in Vineyard. For more info about
+        Vineyard, refer to <a href="https://v6d.io/">Vineyard</a>
+      properties:
+        endpoint:
+          $ref: '#/components/schemas/.ExternalEndpointSpec'
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by Vineyard component.
+            For Master, refer to <a href="https://etcd.io/docs/v3.5/op-guide/configuration/">Etcd
+            Configuration</a> for more info Default is not set.
+          type: object
+        image:
+          description: The image of Vineyard component. For Master, the default image
+            is `bitnami/etcd` For Worker, the default image is `vineyardcloudnative/vineyardd`
+            The default container registry is `docker.io`, you can change it by setting
+            the image field
+          type: string
+        imagePullPolicy:
+          description: The image pull policy of Vineyard component. Default is `IfNotPresent`.
+          type: string
+        imageTag:
+          description: The image tag of Vineyard component. For Master, the default
+            image tag is `3.5.10`. For Worker, the default image tag is `latest`.
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'NodeSelector is a selector to choose which nodes to launch
+            the Vineyard component. E,g. {"disktype": "ssd"}'
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: |-
+            Configurable options for Vineyard component. For Master, there is no configurable options. For Worker, support the following options.
+
+              vineyardd.reserve.memory: (Bool) where to reserve memory for vineyardd
+                                        If set to true, the memory quota will be counted to the vineyardd rather than the application.
+              etcd.prefix: (String) the prefix of etcd key for vineyard objects
+
+              Default value is as follows.
+
+                vineyardd.reserve.memory: "true"
+                etcd.prefix: "/vineyard"
+          type: object
+        ports:
+          additionalProperties:
+            default: 0
+            format: int32
+            type: integer
+          description: Ports used by Vineyard component. For Master, the default client
+            port is 2379 and peer port is 2380. For Worker, the default rpc port is
+            9600.
+          type: object
+        replicas:
+          description: The replicas of Vineyard component. If not specified, defaults
+            to 1. For worker, the replicas should not be greater than the number of
+            nodes in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into the vineyard runtime component's filesystem. It is useful
+            for specifying a persistent storage. Default is not set.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".Metadata":
+      description: Metadata defines subgroup properties of metav1.ObjectMeta
+      properties:
+        annotations:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Annotations are annotations of pod specification
+          type: object
+        labels:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Labels are labels of pod specification
+          type: object
+        selector:
+          $ref: '#/components/schemas/v1.GroupKind'
+      type: object
+    ".MetadataSyncPolicy":
+      description: MetadataSyncPolicy defines policies when syncing metadata
+      properties:
+        autoSync:
+          description: AutoSync enables automatic metadata sync when setting up a
+            runtime. If not set, it defaults to true.
+          type: boolean
+      type: object
+    ".Mount":
+      description: Mount describes a mounting. <br> Refer to <a href="https://docs.alluxio.io/os/user/stable/en/ufs/S3.html">Alluxio
+        Storage Integrations</a> for more info
+      properties:
+        encryptOptions:
+          description: The secret information
+          items:
+            $ref: '#/components/schemas/.EncryptOption'
+          type: array
+        mountPoint:
+          description: MountPoint is the mount point of source.
+          type: string
+        name:
+          description: The name of mount
+          type: string
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: The Mount Options. <br> Refer to <a href="https://docs.alluxio.io/os/user/stable/en/reference/Properties-List.html">Mount
+            Options</a>.  <br> The option has Prefix 'fs.' And you can Learn more
+            from <a href="https://docs.alluxio.io/os/user/stable/en/ufs/S3.html">The
+            Storage Integrations</a>
+          type: object
+        path:
+          description: The path of mount, if not set will be /{Name}
+          type: string
+        readOnly:
+          description: 'Optional: Defaults to false (read-write).'
+          type: boolean
+        shared:
+          description: 'Optional: Defaults to false (shared).'
+          type: boolean
+      type: object
+    ".OSAdvise":
+      description: OSAdvise is a description of choices to have optimization on specific
+        operating system
+      properties:
+        enabled:
+          description: Enable operating system optimization not enabled by default.
+          type: boolean
+        osVersion:
+          description: Specific operating system version that can have optimization.
+          type: string
+      type: object
+    ".OperationRef":
+      properties:
+        apiVersion:
+          description: API version of the referent operation
+          type: string
+        kind:
+          default: ""
+          description: Kind specifies the type of the referent operation
+          type: string
+        name:
+          default: ""
+          description: Name specifies the name of the referent operation
+          type: string
+        namespace:
+          description: Namespace specifies the namespace of the referent operation.
+          type: string
+      required:
+      - kind
+      - name
+      type: object
+    ".OperationStatus":
+      description: OperationStatus defines the observed state of operation
+      properties:
+        conditions:
+          description: Conditions consists of transition information on operation's
+            Phase
+          items:
+            $ref: '#/components/schemas/.Condition'
+          type: array
+        duration:
+          default: ""
+          description: Duration tell user how much time was spent to operation
+          type: string
+        infos:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Infos operation customized name-value
+          type: object
+        lastScheduleTime:
+          $ref: '#/components/schemas/v1.Time'
+        lastSuccessfulTime:
+          $ref: '#/components/schemas/v1.Time'
+        phase:
+          default: ""
+          description: Phase describes current phase of operation
+          type: string
+        waitingFor:
+          $ref: '#/components/schemas/.WaitingStatus'
+      required:
+      - conditions
+      - duration
+      - phase
+      type: object
+    ".PodMetadata":
+      description: PodMetadata defines subgroup properties of metav1.ObjectMeta
+      properties:
+        annotations:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Annotations are annotations of pod specification
+          type: object
+        labels:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Labels are labels of pod specification
+          type: object
+      type: object
+    ".Processor":
+      description: Processor defines the actual processor for DataProcess. Processor
+        can be either of a Job or a Shell script.
+      properties:
+        job:
+          $ref: '#/components/schemas/.JobProcessor'
+        podMetadata:
+          $ref: '#/components/schemas/.PodMetadata'
+        script:
+          $ref: '#/components/schemas/.ScriptProcessor'
+        serviceAccountName:
+          description: ServiceAccountName defiens the serviceAccountName of the container
+          type: string
+      type: object
+    ".Runtime":
+      description: Runtime describes a runtime to be used to support dataset
+      properties:
+        category:
+          description: Category the runtime object belongs to (e.g. Accelerate)
+          type: string
+        masterReplicas:
+          description: Runtime master replicas
+          format: int32
+          type: integer
+        name:
+          description: Name of the runtime object
+          type: string
+        namespace:
+          description: Namespace of the runtime object
+          type: string
+        type:
+          description: Runtime object's type (e.g. Alluxio)
+          type: string
+      type: object
+    ".RuntimeCondition":
+      description: Condition describes the state of the cache at a certain point.
+      properties:
+        lastProbeTime:
+          $ref: '#/components/schemas/v1.Time'
+        lastTransitionTime:
+          $ref: '#/components/schemas/v1.Time'
+        message:
+          description: A human readable message indicating details about the transition.
+          type: string
+        reason:
+          description: The reason for the condition's last transition.
+          type: string
+        status:
+          default: ""
+          description: Status of the condition, one of True, False, Unknown.
+          type: string
+        type:
+          default: ""
+          description: Type of cache condition.
+          type: string
+      required:
+      - status
+      - type
+      type: object
+    ".RuntimeManagement":
+      description: RuntimeManagement defines suggestions for runtime controllers to
+        manage the runtime
+      properties:
+        cleanCachePolicy:
+          $ref: '#/components/schemas/.CleanCachePolicy'
+        metadataSyncPolicy:
+          $ref: '#/components/schemas/.MetadataSyncPolicy'
+      type: object
+    ".RuntimeStatus":
+      description: RuntimeStatus defines the observed state of Runtime
+      properties:
+        apiGateway:
+          $ref: '#/components/schemas/.APIGatewayStatus'
+        cacheAffinity:
+          $ref: '#/components/schemas/v1.NodeAffinity'
+        cacheStates:
+          additionalProperties:
+            default: ""
+            type: string
+          description: CacheStatus represents the total resources of the dataset.
+          type: object
+        conditions:
+          description: Represents the latest available observations of a ddc runtime's
+            current state.
+          items:
+            $ref: '#/components/schemas/.RuntimeCondition'
+          type: array
+          x-kubernetes-patch-strategy: merge
+          x-kubernetes-patch-merge-key: type
+        currentFuseNumberScheduled:
+          default: 0
+          description: The total number of nodes that can be running the runtime Fuse
+            pod (including nodes correctly running the runtime Fuse pod).
+          format: int32
+          type: integer
+        currentMasterNumberScheduled:
+          default: 0
+          description: The total number of nodes that should be running the runtime
+            pod (including nodes correctly running the runtime master pod).
+          format: int32
+          type: integer
+        currentWorkerNumberScheduled:
+          default: 0
+          description: The total number of nodes that can be running the runtime worker
+            pod (including nodes correctly running the runtime worker pod).
+          format: int32
+          type: integer
+        desiredFuseNumberScheduled:
+          default: 0
+          description: The total number of nodes that should be running the runtime
+            Fuse pod (including nodes correctly running the runtime Fuse pod).
+          format: int32
+          type: integer
+        desiredMasterNumberScheduled:
+          default: 0
+          description: The total number of nodes that should be running the runtime
+            pod (including nodes correctly running the runtime master pod).
+          format: int32
+          type: integer
+        desiredWorkerNumberScheduled:
+          default: 0
+          description: The total number of nodes that should be running the runtime
+            worker pod (including nodes correctly running the runtime worker pod).
+          format: int32
+          type: integer
+        fuseNumberAvailable:
+          description: The number of nodes that should be running the runtime Fuse
+            pod and have one or more of the runtime Fuse pod running and available
+            (ready for at least spec.minReadySeconds)
+          format: int32
+          type: integer
+        fuseNumberReady:
+          default: 0
+          description: The number of nodes that should be running the runtime Fuse
+            pod and have one or more of the runtime Fuse pod running and ready.
+          format: int32
+          type: integer
+        fuseNumberUnavailable:
+          description: The number of nodes that should be running the runtime fuse
+            pod and have none of the runtime fuse pod running and available (ready
+            for at least spec.minReadySeconds)
+          format: int32
+          type: integer
+        fusePhase:
+          default: ""
+          description: FusePhase is the Fuse running phase
+          type: string
+        fuseReason:
+          description: Reason for the condition's last transition.
+          type: string
+        masterNumberReady:
+          default: 0
+          description: The number of nodes that should be running the runtime worker
+            pod and have zero or more of the runtime master pod running and ready.
+          format: int32
+          type: integer
+        masterPhase:
+          default: ""
+          description: MasterPhase is the master running phase
+          type: string
+        masterReason:
+          description: Reason for Master's condition transition
+          type: string
+        mountTime:
+          $ref: '#/components/schemas/v1.Time'
+        mounts:
+          description: MountPoints represents the mount points specified in the bounded
+            dataset
+          items:
+            $ref: '#/components/schemas/.Mount'
+          type: array
+        selector:
+          description: Selector is used for auto-scaling
+          type: string
+        setupDuration:
+          description: Duration tell user how much time was spent to setup the runtime
+          type: string
+        valueFile:
+          default: ""
+          description: config map used to set configurations
+          type: string
+        workerNumberAvailable:
+          description: The number of nodes that should be running the runtime worker
+            pod and have one or more of the runtime worker pod running and available
+            (ready for at least spec.minReadySeconds)
+          format: int32
+          type: integer
+        workerNumberReady:
+          default: 0
+          description: The number of nodes that should be running the runtime worker
+            pod and have one or more of the runtime worker pod running and ready.
+          format: int32
+          type: integer
+        workerNumberUnavailable:
+          description: The number of nodes that should be running the runtime worker
+            pod and have none of the runtime worker pod running and available (ready
+            for at least spec.minReadySeconds)
+          format: int32
+          type: integer
+        workerPhase:
+          default: ""
+          description: WorkerPhase is the worker running phase
+          type: string
+        workerReason:
+          description: Reason for Worker's condition transition
+          type: string
+      required:
+      - currentFuseNumberScheduled
+      - currentMasterNumberScheduled
+      - currentWorkerNumberScheduled
+      - desiredFuseNumberScheduled
+      - desiredMasterNumberScheduled
+      - desiredWorkerNumberScheduled
+      - fuseNumberReady
+      - fusePhase
+      - masterNumberReady
+      - masterPhase
+      - valueFile
+      - workerNumberReady
+      - workerPhase
+      type: object
+    ".ScriptProcessor":
+      properties:
+        command:
+          description: Entrypoint command for ScriptProcessor.
+          items:
+            default: ""
+            type: string
+          type: array
+        env:
+          description: List of environment variables to set in the container.
+          items:
+            $ref: '#/components/schemas/v1.EnvVar'
+          type: array
+        image:
+          description: Image (e.g. alluxio/alluxio)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image tag (e.g. 2.3.0-SNAPSHOT)
+          type: string
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        restartPolicy:
+          description: RestartPolicy specifies the processor job's restart policy.
+            Only "Never", "OnFailure" is allowed.
+          type: string
+        source:
+          default: ""
+          description: Script source for ScriptProcessor
+          type: string
+        volumeMounts:
+          description: Pod volumes to mount into the container's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+        volumes:
+          description: List of volumes that can be mounted by containers belonging
+            to the pod.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+      required:
+      - source
+      type: object
+    ".SecretKeySelector":
+      properties:
+        key:
+          description: The required key in the secret
+          type: string
+        name:
+          description: The name of required secret
+          type: string
+      type: object
+    ".TargetDataset":
+      description: TargetDataset defines the target dataset of the DataLoad
+      properties:
+        name:
+          default: ""
+          description: Name defines name of the target dataset
+          type: string
+        namespace:
+          description: Namespace defines namespace of the target dataset
+          type: string
+      required:
+      - name
+      type: object
+    ".TargetDatasetWithMountPath":
+      description: TargetDataset defines which dataset will be processed by DataProcess.
+        Under the hood, the dataset's pvc will be mounted to the given mountPath of
+        the DataProcess's containers.
+      properties:
+        mountPath:
+          default: ""
+          description: MountPath defines where the Dataset should be mounted in DataProcess's
+            containers.
+          type: string
+        name:
+          default: ""
+          description: Name defines name of the target dataset
+          type: string
+        namespace:
+          description: Namespace defines namespace of the target dataset
+          type: string
+        subPath:
+          description: SubPath defines subpath of the target dataset to mount.
+          type: string
+      required:
+      - mountPath
+      - name
+      type: object
+    ".TargetPath":
+      description: TargetPath defines the target path of the DataLoad
+      properties:
+        path:
+          default: ""
+          description: Path defines path to be load
+          type: string
+        replicas:
+          description: Replicas defines how many replicas will be loaded
+          format: int32
+          type: integer
+      required:
+      - path
+      type: object
+    ".ThinCompTemplateSpec":
+      description: ThinCompTemplateSpec is a description of the thinRuntime components
+      properties:
+        enabled:
+          description: Enabled or Disabled for the components.
+          type: boolean
+        env:
+          description: Environment variables that will be used by thinRuntime component.
+          items:
+            $ref: '#/components/schemas/v1.EnvVar'
+          type: array
+        image:
+          description: Image for thinRuntime fuse
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image for thinRuntime fuse
+          type: string
+        livenessProbe:
+          $ref: '#/components/schemas/v1.Probe'
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector
+          type: object
+        ports:
+          description: Ports used thinRuntime
+          items:
+            $ref: '#/components/schemas/v1.ContainerPort'
+          type: array
+        readinessProbe:
+          $ref: '#/components/schemas/v1.Probe'
+        replicas:
+          description: Replicas is the desired number of replicas of the given template.
+            If unspecified, defaults to 1. replicas is the min replicas of dataset
+            in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into runtime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".ThinFuseSpec":
+      properties:
+        args:
+          description: Arguments that will be passed to thinRuntime Fuse
+          items:
+            default: ""
+            type: string
+          type: array
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean thinRuntime Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once the fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnDemand'
+          type: string
+        command:
+          description: Command that will be passed to thinRuntime Fuse
+          items:
+            default: ""
+            type: string
+          type: array
+        env:
+          description: Environment variables that will be used by thinRuntime Fuse
+          items:
+            $ref: '#/components/schemas/v1.EnvVar'
+          type: array
+        image:
+          description: Image for thinRuntime fuse
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image for thinRuntime fuse
+          type: string
+        livenessProbe:
+          $ref: '#/components/schemas/v1.Probe'
+        networkMode:
+          description: Whether to use hostnetwork or not
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: NodeSelector is a selector which must be true for the fuse
+            client to fit on a node, this option only effect when global is enabled
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Options configurable options of FUSE client, performance parameters
+            usually. will be merged with Dataset.spec.mounts.options into fuse pod.
+          type: object
+        ports:
+          description: Ports used thinRuntime
+          items:
+            $ref: '#/components/schemas/v1.ContainerPort'
+          type: array
+        readinessProbe:
+          $ref: '#/components/schemas/v1.Probe'
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into the thinruntime component's filesystem.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".ThinRuntime":
+      description: ThinRuntime is the Schema for the thinruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.ThinRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".ThinRuntimeList":
+      description: ThinRuntimeList contains a list of ThinRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.ThinRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".ThinRuntimeProfile":
+      description: ThinRuntimeProfile is the Schema for the ThinRuntimeProfiles API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.ThinRuntimeProfileSpec'
+        status:
+          description: ThinRuntimeProfileStatus defines the observed state of ThinRuntimeProfile
+          type: object
+      type: object
+    ".ThinRuntimeProfileList":
+      description: ThinRuntimeProfileList contains a list of ThinRuntimeProfile
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.ThinRuntimeProfile'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".ThinRuntimeProfileSpec":
+      description: ThinRuntimeProfileSpec defines the desired state of ThinRuntimeProfile
+      properties:
+        fileSystemType:
+          default: ""
+          description: file system of thinRuntime
+          type: string
+        fuse:
+          $ref: '#/components/schemas/.ThinFuseSpec'
+        nodePublishSecretPolicy:
+          description: NodePublishSecretPolicy describes the policy to decide which
+            to do with node publish secret when mounting an existing persistent volume.
+          type: string
+        volumes:
+          description: Volumes is the list of Kubernetes volumes that can be mounted
+            by runtime components and/or fuses.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+        worker:
+          $ref: '#/components/schemas/.ThinCompTemplateSpec'
+      required:
+      - fileSystemType
+      type: object
+    ".ThinRuntimeProfileStatus":
+      description: ThinRuntimeProfileStatus defines the observed state of ThinRuntimeProfile
+      type: object
+    ".ThinRuntimeSpec":
+      description: ThinRuntimeSpec defines the desired state of ThinRuntime
+      properties:
+        disablePrometheus:
+          description: Disable monitoring for Runtime Prometheus is enabled by default
+          type: boolean
+        fuse:
+          $ref: '#/components/schemas/.ThinFuseSpec'
+        profileName:
+          description: The specific runtime profile name, empty value is used for
+            handling datasets which mount another dataset
+          type: string
+        replicas:
+          description: The replicas of the worker, need to be specified
+          format: int32
+          type: integer
+        runAs:
+          $ref: '#/components/schemas/.User'
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        volumes:
+          description: Volumes is the list of Kubernetes volumes that can be mounted
+            by runtime components and/or fuses.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+        worker:
+          $ref: '#/components/schemas/.ThinCompTemplateSpec'
+      type: object
+    ".TieredStore":
+      description: TieredStore is a description of the tiered store
+      properties:
+        levels:
+          description: configurations for multiple tiers
+          items:
+            $ref: '#/components/schemas/.Level'
+          type: array
+      type: object
+    ".User":
+      description: User explains the user and group to run a Container
+      properties:
+        gid:
+          description: The gid to run the alluxio runtime
+          format: int64
+          type: integer
+        group:
+          default: ""
+          description: The group name to run the alluxio runtime
+          type: string
+        uid:
+          description: The uid to run the alluxio runtime
+          format: int64
+          type: integer
+        user:
+          default: ""
+          description: The user name to run the alluxio runtime
+          type: string
+      required:
+      - gid
+      - group
+      - uid
+      - user
+      type: object
+    ".VersionSpec":
+      description: VersionSpec represents the settings for the  version that fluid
+        is orchestrating.
+      properties:
+        image:
+          description: Image (e.g. alluxio/alluxio)
+          type: string
+        imagePullPolicy:
+          description: 'One of the three policies: `Always`, `IfNotPresent`, `Never`'
+          type: string
+        imageTag:
+          description: Image tag (e.g. 2.3.0-SNAPSHOT)
+          type: string
+      type: object
+    ".VineyardCompTemplateSpec":
+      description: VineyardCompTemplateSpec is the common configurations for vineyard
+        components including Master and Worker.
+      properties:
+        env:
+          additionalProperties:
+            default: ""
+            type: string
+          description: Environment variables that will be used by Vineyard component.
+            For Master, refer to <a href="https://etcd.io/docs/v3.5/op-guide/configuration/">Etcd
+            Configuration</a> for more info Default is not set.
+          type: object
+        image:
+          description: The image of Vineyard component. For Master, the default image
+            is `bitnami/etcd` For Worker, the default image is `vineyardcloudnative/vineyardd`
+            The default container registry is `docker.io`, you can change it by setting
+            the image field
+          type: string
+        imagePullPolicy:
+          description: The image pull policy of Vineyard component. Default is `IfNotPresent`.
+          type: string
+        imageTag:
+          description: The image tag of Vineyard component. For Master, the default
+            image tag is `3.5.10`. For Worker, the default image tag is `latest`.
+          type: string
+        nodeSelector:
+          additionalProperties:
+            default: ""
+            type: string
+          description: 'NodeSelector is a selector to choose which nodes to launch
+            the Vineyard component. E,g. {"disktype": "ssd"}'
+          type: object
+        options:
+          additionalProperties:
+            default: ""
+            type: string
+          description: |-
+            Configurable options for Vineyard component. For Master, there is no configurable options. For Worker, support the following options.
+
+              vineyardd.reserve.memory: (Bool) where to reserve memory for vineyardd
+                                        If set to true, the memory quota will be counted to the vineyardd rather than the application.
+              etcd.prefix: (String) the prefix of etcd key for vineyard objects
+
+              Default value is as follows.
+
+                vineyardd.reserve.memory: "true"
+                etcd.prefix: "/vineyard"
+          type: object
+        ports:
+          additionalProperties:
+            default: 0
+            format: int32
+            type: integer
+          description: Ports used by Vineyard component. For Master, the default client
+            port is 2379 and peer port is 2380. For Worker, the default rpc port is
+            9600.
+          type: object
+        replicas:
+          description: The replicas of Vineyard component. If not specified, defaults
+            to 1. For worker, the replicas should not be greater than the number of
+            nodes in the cluster
+          format: int32
+          type: integer
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+        volumeMounts:
+          description: VolumeMounts specifies the volumes listed in ".spec.volumes"
+            to mount into the vineyard runtime component's filesystem. It is useful
+            for specifying a persistent storage. Default is not set.
+          items:
+            $ref: '#/components/schemas/v1.VolumeMount'
+          type: array
+      type: object
+    ".VineyardRuntime":
+      description: VineyardRuntime is the Schema for the vineyardruntimes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/.VineyardRuntimeSpec'
+        status:
+          $ref: '#/components/schemas/.RuntimeStatus'
+      type: object
+    ".VineyardRuntimeList":
+      description: VineyardRuntimeList contains a list of VineyardRuntime
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/.VineyardRuntime'
+          type: array
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/v1.ListMeta'
+      required:
+      - items
+      type: object
+    ".VineyardRuntimeSpec":
+      description: VineyardRuntimeSpec defines the desired state of VineyardRuntime
+      properties:
+        disablePrometheus:
+          description: Disable monitoring metrics for Vineyard Runtime Default is
+            false
+          type: boolean
+        fuse:
+          $ref: '#/components/schemas/.VineyardSockSpec'
+        master:
+          $ref: '#/components/schemas/.MasterSpec'
+        tieredstore:
+          $ref: '#/components/schemas/.TieredStore'
+        volumes:
+          description: Volumes is the list of Kubernetes volumes that can be mounted
+            by the vineyard components (Master and Worker). Default is null.
+          items:
+            $ref: '#/components/schemas/v1.Volume'
+          type: array
+        worker:
+          $ref: '#/components/schemas/.VineyardCompTemplateSpec'
+      type: object
+    ".VineyardSockSpec":
+      description: VineyardSockSpec holds the configurations for vineyard client socket
+      properties:
+        cleanPolicy:
+          description: 'CleanPolicy decides when to clean Vineyard Fuse pods. Currently
+            Fluid supports two policies: OnDemand and OnRuntimeDeleted OnDemand cleans
+            fuse pod once th fuse pod on some node is not needed OnRuntimeDeleted
+            cleans fuse pod only when the cache runtime is deleted Defaults to OnRuntimeDeleted'
+          type: string
+        image:
+          description: Image for Vineyard Fuse Default is `vineyardcloudnative/vineyard-mount-socket`
+          type: string
+        imagePullPolicy:
+          description: Image pull policy for Vineyard Fuse Default is `IfNotPresent`
+            Available values are `Always`, `IfNotPresent`, `Never`
+          type: string
+        imageTag:
+          description: Image Tag for Vineyard Fuse Default is `latest`
+          type: string
+        resources:
+          $ref: '#/components/schemas/v1.ResourceRequirements'
+      type: object
+    ".VolumeSource":
+      description: VolumeSource defines volume source and volume claim template.
+      properties:
+        awsElasticBlockStore:
+          $ref: '#/components/schemas/v1.AWSElasticBlockStoreVolumeSource'
+        azureDisk:
+          $ref: '#/components/schemas/v1.AzureDiskVolumeSource'
+        azureFile:
+          $ref: '#/components/schemas/v1.AzureFileVolumeSource'
+        cephfs:
+          $ref: '#/components/schemas/v1.CephFSVolumeSource'
+        cinder:
+          $ref: '#/components/schemas/v1.CinderVolumeSource'
+        configMap:
+          $ref: '#/components/schemas/v1.ConfigMapVolumeSource'
+        csi:
+          $ref: '#/components/schemas/v1.CSIVolumeSource'
+        downwardAPI:
+          $ref: '#/components/schemas/v1.DownwardAPIVolumeSource'
+        emptyDir:
+          $ref: '#/components/schemas/v1.EmptyDirVolumeSource'
+        ephemeral:
+          $ref: '#/components/schemas/v1.EphemeralVolumeSource'
+        fc:
+          $ref: '#/components/schemas/v1.FCVolumeSource'
+        flexVolume:
+          $ref: '#/components/schemas/v1.FlexVolumeSource'
+        flocker:
+          $ref: '#/components/schemas/v1.FlockerVolumeSource'
+        gcePersistentDisk:
+          $ref: '#/components/schemas/v1.GCEPersistentDiskVolumeSource'
+        gitRepo:
+          $ref: '#/components/schemas/v1.GitRepoVolumeSource'
+        glusterfs:
+          $ref: '#/components/schemas/v1.GlusterfsVolumeSource'
+        hostPath:
+          $ref: '#/components/schemas/v1.HostPathVolumeSource'
+        iscsi:
+          $ref: '#/components/schemas/v1.ISCSIVolumeSource'
+        nfs:
+          $ref: '#/components/schemas/v1.NFSVolumeSource'
+        persistentVolumeClaim:
+          $ref: '#/components/schemas/v1.PersistentVolumeClaimVolumeSource'
+        photonPersistentDisk:
+          $ref: '#/components/schemas/v1.PhotonPersistentDiskVolumeSource'
+        portworxVolume:
+          $ref: '#/components/schemas/v1.PortworxVolumeSource'
+        projected:
+          $ref: '#/components/schemas/v1.ProjectedVolumeSource'
+        quobyte:
+          $ref: '#/components/schemas/v1.QuobyteVolumeSource'
+        rbd:
+          $ref: '#/components/schemas/v1.RBDVolumeSource'
+        scaleIO:
+          $ref: '#/components/schemas/v1.ScaleIOVolumeSource'
+        secret:
+          $ref: '#/components/schemas/v1.SecretVolumeSource'
+        storageos:
+          $ref: '#/components/schemas/v1.StorageOSVolumeSource'
+        vsphereVolume:
+          $ref: '#/components/schemas/v1.VsphereVirtualDiskVolumeSource'
+      type: object
+    ".WaitingStatus":
+      properties:
+        operationComplete:
+          description: OperationComplete indicates if the preceding operation is complete
+          type: boolean
+      type: object
+

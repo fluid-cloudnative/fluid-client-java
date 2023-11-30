@@ -1,7 +1,10 @@
 
+
 # HCFSStatus
 
+HCFS Endpoint info
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **endpoint** | **String** | Endpoint for accessing |  [optional]

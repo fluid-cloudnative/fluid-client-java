@@ -1,10 +1,14 @@
 
+
 # RuntimeStatus
 
+RuntimeStatus defines the observed state of Runtime
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**apiGateway** | [**APIGatewayStatus**](APIGatewayStatus.md) | APIGatewayStatus represents rest api gateway status |  [optional]
+**apiGateway** | [**APIGatewayStatus**](APIGatewayStatus.md) |  |  [optional]
+**cacheAffinity** | [**V1NodeAffinity**](V1NodeAffinity.md) |  |  [optional]
 **cacheStates** | **Map&lt;String, String&gt;** | CacheStatus represents the total resources of the dataset. |  [optional]
 **conditions** | [**List&lt;RuntimeCondition&gt;**](RuntimeCondition.md) | Represents the latest available observations of a ddc runtime&#39;s current state. |  [optional]
 **currentFuseNumberScheduled** | **Integer** | The total number of nodes that can be running the runtime Fuse pod (including nodes correctly running the runtime Fuse pod). | 
@@ -21,6 +25,8 @@ Name | Type | Description | Notes
 **masterNumberReady** | **Integer** | The number of nodes that should be running the runtime worker pod and have zero or more of the runtime master pod running and ready. | 
 **masterPhase** | **String** | MasterPhase is the master running phase | 
 **masterReason** | **String** | Reason for Master&#39;s condition transition |  [optional]
+**mountTime** | [**V1Time**](V1Time.md) |  |  [optional]
+**mounts** | [**List&lt;Mount&gt;**](Mount.md) | MountPoints represents the mount points specified in the bounded dataset |  [optional]
 **selector** | **String** | Selector is used for auto-scaling |  [optional]
 **setupDuration** | **String** | Duration tell user how much time was spent to setup the runtime |  [optional]
 **valueFile** | **String** | config map used to set configurations | 
