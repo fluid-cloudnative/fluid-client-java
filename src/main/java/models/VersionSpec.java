@@ -28,7 +28,7 @@ import java.io.IOException;
  * VersionSpec represents the settings for the  version that fluid is orchestrating.
  */
 @ApiModel(description = "VersionSpec represents the settings for the  version that fluid is orchestrating.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class VersionSpec {
   public static final String SERIALIZED_NAME_IMAGE = "image";
   @SerializedName(SERIALIZED_NAME_IMAGE)

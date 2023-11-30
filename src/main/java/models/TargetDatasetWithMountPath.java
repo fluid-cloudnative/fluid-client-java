@@ -28,7 +28,7 @@ import java.io.IOException;
  * TargetDataset defines which dataset will be processed by DataProcess. Under the hood, the dataset&#39;s pvc will be mounted to the given mountPath of the DataProcess&#39;s containers.
  */
 @ApiModel(description = "TargetDataset defines which dataset will be processed by DataProcess. Under the hood, the dataset's pvc will be mounted to the given mountPath of the DataProcess's containers.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class TargetDatasetWithMountPath {
   public static final String SERIALIZED_NAME_MOUNT_PATH = "mountPath";
   @SerializedName(SERIALIZED_NAME_MOUNT_PATH)

@@ -30,7 +30,7 @@ import models.VolumeSource;
  * Level describes configurations a tier needs. &lt;br&gt; Refer to &lt;a href&#x3D;\&quot;https://docs.alluxio.io/os/user/stable/en/core-services/Caching.html#configuring-tiered-storage\&quot;&gt;Configuring Tiered Storage&lt;/a&gt; for more info
  */
 @ApiModel(description = "Level describes configurations a tier needs. <br> Refer to <a href=\"https://docs.alluxio.io/os/user/stable/en/core-services/Caching.html#configuring-tiered-storage\">Configuring Tiered Storage</a> for more info")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class Level {
   public static final String SERIALIZED_NAME_HIGH = "high";
   @SerializedName(SERIALIZED_NAME_HIGH)

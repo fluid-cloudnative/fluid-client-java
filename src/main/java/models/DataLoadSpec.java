@@ -39,7 +39,7 @@ import models.V1Toleration;
  * DataLoadSpec defines the desired state of DataLoad
  */
 @ApiModel(description = "DataLoadSpec defines the desired state of DataLoad")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class DataLoadSpec {
   public static final String SERIALIZED_NAME_AFFINITY = "affinity";
   @SerializedName(SERIALIZED_NAME_AFFINITY)

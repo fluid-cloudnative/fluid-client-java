@@ -37,7 +37,7 @@ import models.V1VolumeMount;
  * ThinCompTemplateSpec is a description of the thinRuntime components
  */
 @ApiModel(description = "ThinCompTemplateSpec is a description of the thinRuntime components")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class ThinCompTemplateSpec {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)

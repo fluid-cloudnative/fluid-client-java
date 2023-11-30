@@ -35,7 +35,7 @@ import models.V1VolumeMount;
  * AlluxioFuseSpec is a description of the Alluxio Fuse
  */
 @ApiModel(description = "AlluxioFuseSpec is a description of the Alluxio Fuse")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class AlluxioFuseSpec {
   public static final String SERIALIZED_NAME_ARGS = "args";
   @SerializedName(SERIALIZED_NAME_ARGS)

@@ -29,7 +29,7 @@ import java.io.IOException;
  * VineyardSockSpec holds the configurations for vineyard client socket
  */
 @ApiModel(description = "VineyardSockSpec holds the configurations for vineyard client socket")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class VineyardSockSpec {
   public static final String SERIALIZED_NAME_CLEAN_POLICY = "cleanPolicy";
   @SerializedName(SERIALIZED_NAME_CLEAN_POLICY)

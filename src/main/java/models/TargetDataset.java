@@ -28,7 +28,7 @@ import java.io.IOException;
  * TargetDataset defines the target dataset of the DataLoad
  */
 @ApiModel(description = "TargetDataset defines the target dataset of the DataLoad")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class TargetDataset {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)

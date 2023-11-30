@@ -32,7 +32,7 @@ import models.GooseFSRuntime;
  * GooseFSRuntimeList contains a list of GooseFSRuntime
  */
 @ApiModel(description = "GooseFSRuntimeList contains a list of GooseFSRuntime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class GooseFSRuntimeList {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)

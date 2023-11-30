@@ -31,7 +31,7 @@ import models.TargetDatasetWithMountPath;
  * DataProcessSpec defines the desired state of DataProcess
  */
 @ApiModel(description = "DataProcessSpec defines the desired state of DataProcess")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class DataProcessSpec {
   public static final String SERIALIZED_NAME_DATASET = "dataset";
   @SerializedName(SERIALIZED_NAME_DATASET)

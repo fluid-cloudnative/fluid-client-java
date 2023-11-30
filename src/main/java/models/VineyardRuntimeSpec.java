@@ -35,7 +35,7 @@ import models.VineyardSockSpec;
  * VineyardRuntimeSpec defines the desired state of VineyardRuntime
  */
 @ApiModel(description = "VineyardRuntimeSpec defines the desired state of VineyardRuntime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class VineyardRuntimeSpec {
   public static final String SERIALIZED_NAME_DISABLE_PROMETHEUS = "disablePrometheus";
   @SerializedName(SERIALIZED_NAME_DISABLE_PROMETHEUS)

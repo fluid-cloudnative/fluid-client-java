@@ -42,7 +42,7 @@ import models.VersionSpec;
  * AlluxioRuntimeSpec defines the desired state of AlluxioRuntime
  */
 @ApiModel(description = "AlluxioRuntimeSpec defines the desired state of AlluxioRuntime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class AlluxioRuntimeSpec {
   public static final String SERIALIZED_NAME_ALLUXIO_VERSION = "alluxioVersion";
   @SerializedName(SERIALIZED_NAME_ALLUXIO_VERSION)

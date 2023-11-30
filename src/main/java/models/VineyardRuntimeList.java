@@ -32,7 +32,7 @@ import models.VineyardRuntime;
  * VineyardRuntimeList contains a list of VineyardRuntime
  */
 @ApiModel(description = "VineyardRuntimeList contains a list of VineyardRuntime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class VineyardRuntimeList {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)

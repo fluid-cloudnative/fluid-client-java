@@ -31,7 +31,7 @@ import models.VineyardRuntimeSpec;
  * VineyardRuntime is the Schema for the vineyardruntimes API
  */
 @ApiModel(description = "VineyardRuntime is the Schema for the vineyardruntimes API")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T11:55:35.636004+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
 public class VineyardRuntime {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)
