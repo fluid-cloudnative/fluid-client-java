@@ -30,7 +30,7 @@ import models.MetadataSyncPolicy;
  * RuntimeManagement defines suggestions for runtime controllers to manage the runtime
  */
 @ApiModel(description = "RuntimeManagement defines suggestions for runtime controllers to manage the runtime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class RuntimeManagement {
   public static final String SERIALIZED_NAME_CLEAN_CACHE_POLICY = "cleanCachePolicy";
   @SerializedName(SERIALIZED_NAME_CLEAN_CACHE_POLICY)

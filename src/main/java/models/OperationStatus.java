@@ -35,7 +35,7 @@ import models.WaitingStatus;
  * OperationStatus defines the observed state of operation
  */
 @ApiModel(description = "OperationStatus defines the observed state of operation")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class OperationStatus {
   public static final String SERIALIZED_NAME_CONDITIONS = "conditions";
   @SerializedName(SERIALIZED_NAME_CONDITIONS)
@@ -51,11 +51,11 @@ public class OperationStatus {
 
   public static final String SERIALIZED_NAME_LAST_SCHEDULE_TIME = "lastScheduleTime";
   @SerializedName(SERIALIZED_NAME_LAST_SCHEDULE_TIME)
-  private V1Time lastScheduleTime = null;
+  private datetime lastScheduleTime = null;
 
   public static final String SERIALIZED_NAME_LAST_SUCCESSFUL_TIME = "lastSuccessfulTime";
   @SerializedName(SERIALIZED_NAME_LAST_SUCCESSFUL_TIME)
-  private V1Time lastSuccessfulTime = null;
+  private datetime lastSuccessfulTime = null;
 
   public static final String SERIALIZED_NAME_PHASE = "phase";
   @SerializedName(SERIALIZED_NAME_PHASE)
@@ -146,7 +146,7 @@ public class OperationStatus {
   }
 
 
-  public OperationStatus lastScheduleTime(V1Time lastScheduleTime) {
+  public OperationStatus lastScheduleTime(datetime lastScheduleTime) {
     
     this.lastScheduleTime = lastScheduleTime;
     return this;
@@ -159,17 +159,17 @@ public class OperationStatus {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getLastScheduleTime() {
+  public datetime getLastScheduleTime() {
     return lastScheduleTime;
   }
 
 
-  public void setLastScheduleTime(V1Time lastScheduleTime) {
+  public void setLastScheduleTime(datetime lastScheduleTime) {
     this.lastScheduleTime = lastScheduleTime;
   }
 
 
-  public OperationStatus lastSuccessfulTime(V1Time lastSuccessfulTime) {
+  public OperationStatus lastSuccessfulTime(datetime lastSuccessfulTime) {
     
     this.lastSuccessfulTime = lastSuccessfulTime;
     return this;
@@ -182,12 +182,12 @@ public class OperationStatus {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getLastSuccessfulTime() {
+  public datetime getLastSuccessfulTime() {
     return lastSuccessfulTime;
   }
 
 
-  public void setLastSuccessfulTime(V1Time lastSuccessfulTime) {
+  public void setLastSuccessfulTime(datetime lastSuccessfulTime) {
     this.lastSuccessfulTime = lastSuccessfulTime;
   }
 

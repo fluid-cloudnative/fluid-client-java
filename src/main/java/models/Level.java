@@ -23,14 +23,14 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import models.K8sIoApimachineryPkgApiResourceQuantity;
+import models.Quantity;
 import models.VolumeSource;
 
 /**
  * Level describes configurations a tier needs. &lt;br&gt; Refer to &lt;a href&#x3D;\&quot;https://docs.alluxio.io/os/user/stable/en/core-services/Caching.html#configuring-tiered-storage\&quot;&gt;Configuring Tiered Storage&lt;/a&gt; for more info
  */
 @ApiModel(description = "Level describes configurations a tier needs. <br> Refer to <a href=\"https://docs.alluxio.io/os/user/stable/en/core-services/Caching.html#configuring-tiered-storage\">Configuring Tiered Storage</a> for more info")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class Level {
   public static final String SERIALIZED_NAME_HIGH = "high";
   @SerializedName(SERIALIZED_NAME_HIGH)
@@ -50,7 +50,7 @@ public class Level {
 
   public static final String SERIALIZED_NAME_QUOTA = "quota";
   @SerializedName(SERIALIZED_NAME_QUOTA)
-  private K8sIoApimachineryPkgApiResourceQuantity quota = null;
+  private str quota = null;
 
   public static final String SERIALIZED_NAME_QUOTA_LIST = "quotaList";
   @SerializedName(SERIALIZED_NAME_QUOTA_LIST)
@@ -156,7 +156,7 @@ public class Level {
   }
 
 
-  public Level quota(K8sIoApimachineryPkgApiResourceQuantity quota) {
+  public Level quota(str quota) {
     
     this.quota = quota;
     return this;
@@ -169,12 +169,12 @@ public class Level {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public K8sIoApimachineryPkgApiResourceQuantity getQuota() {
+  public str getQuota() {
     return quota;
   }
 
 
-  public void setQuota(K8sIoApimachineryPkgApiResourceQuantity quota) {
+  public void setQuota(str quota) {
     this.quota = quota;
   }
 

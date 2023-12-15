@@ -36,7 +36,7 @@ import models.Runtime;
  * DatasetStatus defines the observed state of Dataset
  */
 @ApiModel(description = "DatasetStatus defines the observed state of Dataset")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class DatasetStatus {
   public static final String SERIALIZED_NAME_CACHE_STATES = "cacheStates";
   @SerializedName(SERIALIZED_NAME_CACHE_STATES)

@@ -57,7 +57,7 @@ import models.V1VsphereVirtualDiskVolumeSource;
  * VolumeSource defines volume source and volume claim template.
  */
 @ApiModel(description = "VolumeSource defines volume source and volume claim template.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class VolumeSource {
   public static final String SERIALIZED_NAME_AWS_ELASTIC_BLOCK_STORE = "awsElasticBlockStore";
   @SerializedName(SERIALIZED_NAME_AWS_ELASTIC_BLOCK_STORE)

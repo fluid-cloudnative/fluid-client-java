@@ -29,7 +29,7 @@ import models.VersionSpec;
  * InitFuseSpec is a description of initialize the fuse kernel module for runtime
  */
 @ApiModel(description = "InitFuseSpec is a description of initialize the fuse kernel module for runtime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class InitFuseSpec {
   public static final String SERIALIZED_NAME_VERSION = "version";
   @SerializedName(SERIALIZED_NAME_VERSION)

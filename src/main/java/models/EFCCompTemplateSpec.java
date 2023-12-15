@@ -34,7 +34,7 @@ import models.VersionSpec;
  * EFCCompTemplateSpec is a description of the EFC components
  */
 @ApiModel(description = "EFCCompTemplateSpec is a description of the EFC components")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class EFCCompTemplateSpec {
   public static final String SERIALIZED_NAME_DISABLED = "disabled";
   @SerializedName(SERIALIZED_NAME_DISABLED)

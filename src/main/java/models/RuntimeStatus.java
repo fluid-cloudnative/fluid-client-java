@@ -37,7 +37,7 @@ import models.V1Time;
  * RuntimeStatus defines the observed state of Runtime
  */
 @ApiModel(description = "RuntimeStatus defines the observed state of Runtime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class RuntimeStatus {
   public static final String SERIALIZED_NAME_API_GATEWAY = "apiGateway";
   @SerializedName(SERIALIZED_NAME_API_GATEWAY)
@@ -113,7 +113,7 @@ public class RuntimeStatus {
 
   public static final String SERIALIZED_NAME_MOUNT_TIME = "mountTime";
   @SerializedName(SERIALIZED_NAME_MOUNT_TIME)
-  private V1Time mountTime = null;
+  private datetime mountTime = null;
 
   public static final String SERIALIZED_NAME_MOUNTS = "mounts";
   @SerializedName(SERIALIZED_NAME_MOUNTS)
@@ -572,7 +572,7 @@ public class RuntimeStatus {
   }
 
 
-  public RuntimeStatus mountTime(V1Time mountTime) {
+  public RuntimeStatus mountTime(datetime mountTime) {
     
     this.mountTime = mountTime;
     return this;
@@ -585,12 +585,12 @@ public class RuntimeStatus {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getMountTime() {
+  public datetime getMountTime() {
     return mountTime;
   }
 
 
-  public void setMountTime(V1Time mountTime) {
+  public void setMountTime(datetime mountTime) {
     this.mountTime = mountTime;
   }
 

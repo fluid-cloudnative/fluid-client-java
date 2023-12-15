@@ -33,7 +33,7 @@ import models.EncryptOption;
  * Mount describes a mounting. &lt;br&gt; Refer to &lt;a href&#x3D;\&quot;https://docs.alluxio.io/os/user/stable/en/ufs/S3.html\&quot;&gt;Alluxio Storage Integrations&lt;/a&gt; for more info
  */
 @ApiModel(description = "Mount describes a mounting. <br> Refer to <a href=\"https://docs.alluxio.io/os/user/stable/en/ufs/S3.html\">Alluxio Storage Integrations</a> for more info")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class Mount {
   public static final String SERIALIZED_NAME_ENCRYPT_OPTIONS = "encryptOptions";
   @SerializedName(SERIALIZED_NAME_ENCRYPT_OPTIONS)

@@ -35,7 +35,7 @@ import models.V1VolumeMount;
  * MasterSpec defines the configurations for Vineyard Master component which is also regarded as the Etcd component in Vineyard. For more info about Vineyard, refer to &lt;a href&#x3D;\&quot;https://v6d.io/\&quot;&gt;Vineyard&lt;/a&gt;
  */
 @ApiModel(description = "MasterSpec defines the configurations for Vineyard Master component which is also regarded as the Etcd component in Vineyard. For more info about Vineyard, refer to <a href=\"https://v6d.io/\">Vineyard</a>")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class MasterSpec {
   public static final String SERIALIZED_NAME_ENDPOINT = "endpoint";
   @SerializedName(SERIALIZED_NAME_ENDPOINT)

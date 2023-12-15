@@ -31,7 +31,7 @@ import models.Level;
  * TieredStore is a description of the tiered store
  */
 @ApiModel(description = "TieredStore is a description of the tiered store")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class TieredStore {
   public static final String SERIALIZED_NAME_LEVELS = "levels";
   @SerializedName(SERIALIZED_NAME_LEVELS)

@@ -40,7 +40,7 @@ import models.VersionSpec;
  * JindoRuntimeSpec defines the desired state of JindoRuntime
  */
 @ApiModel(description = "JindoRuntimeSpec defines the desired state of JindoRuntime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class JindoRuntimeSpec {
   public static final String SERIALIZED_NAME_CLEAN_CACHE_POLICY = "cleanCachePolicy";
   @SerializedName(SERIALIZED_NAME_CLEAN_CACHE_POLICY)

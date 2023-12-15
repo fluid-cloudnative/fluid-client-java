@@ -29,15 +29,15 @@ import models.V1Time;
  * Condition describes the state of the cache at a certain point.
  */
 @ApiModel(description = "Condition describes the state of the cache at a certain point.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class DatasetCondition {
   public static final String SERIALIZED_NAME_LAST_TRANSITION_TIME = "lastTransitionTime";
   @SerializedName(SERIALIZED_NAME_LAST_TRANSITION_TIME)
-  private V1Time lastTransitionTime = null;
+  private datetime lastTransitionTime = null;
 
   public static final String SERIALIZED_NAME_LAST_UPDATE_TIME = "lastUpdateTime";
   @SerializedName(SERIALIZED_NAME_LAST_UPDATE_TIME)
-  private V1Time lastUpdateTime = null;
+  private datetime lastUpdateTime = null;
 
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -56,7 +56,7 @@ public class DatasetCondition {
   private String type = "";
 
 
-  public DatasetCondition lastTransitionTime(V1Time lastTransitionTime) {
+  public DatasetCondition lastTransitionTime(datetime lastTransitionTime) {
     
     this.lastTransitionTime = lastTransitionTime;
     return this;
@@ -69,17 +69,17 @@ public class DatasetCondition {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getLastTransitionTime() {
+  public datetime getLastTransitionTime() {
     return lastTransitionTime;
   }
 
 
-  public void setLastTransitionTime(V1Time lastTransitionTime) {
+  public void setLastTransitionTime(datetime lastTransitionTime) {
     this.lastTransitionTime = lastTransitionTime;
   }
 
 
-  public DatasetCondition lastUpdateTime(V1Time lastUpdateTime) {
+  public DatasetCondition lastUpdateTime(datetime lastUpdateTime) {
     
     this.lastUpdateTime = lastUpdateTime;
     return this;
@@ -92,12 +92,12 @@ public class DatasetCondition {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getLastUpdateTime() {
+  public datetime getLastUpdateTime() {
     return lastUpdateTime;
   }
 
 
-  public void setLastUpdateTime(V1Time lastUpdateTime) {
+  public void setLastUpdateTime(datetime lastUpdateTime) {
     this.lastUpdateTime = lastUpdateTime;
   }
 

@@ -35,7 +35,7 @@ import models.V1Volume;
  * ThinRuntimeSpec defines the desired state of ThinRuntime
  */
 @ApiModel(description = "ThinRuntimeSpec defines the desired state of ThinRuntime")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class ThinRuntimeSpec {
   public static final String SERIALIZED_NAME_DISABLE_PROMETHEUS = "disablePrometheus";
   @SerializedName(SERIALIZED_NAME_DISABLE_PROMETHEUS)

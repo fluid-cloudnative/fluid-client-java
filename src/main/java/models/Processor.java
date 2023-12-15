@@ -31,7 +31,7 @@ import models.ScriptProcessor;
  * Processor defines the actual processor for DataProcess. Processor can be either of a Job or a Shell script.
  */
 @ApiModel(description = "Processor defines the actual processor for DataProcess. Processor can be either of a Job or a Shell script.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class Processor {
   public static final String SERIALIZED_NAME_JOB = "job";
   @SerializedName(SERIALIZED_NAME_JOB)

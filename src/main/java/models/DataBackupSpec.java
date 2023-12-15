@@ -30,7 +30,7 @@ import models.User;
  * DataBackupSpec defines the desired state of DataBackup
  */
 @ApiModel(description = "DataBackupSpec defines the desired state of DataBackup")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class DataBackupSpec {
   public static final String SERIALIZED_NAME_BACKUP_PATH = "backupPath";
   @SerializedName(SERIALIZED_NAME_BACKUP_PATH)

@@ -1781,7 +1781,7 @@ components:
             Multiple paths should be separated with comma. For example: "/mnt/cache1,/mnt/cache2".'
           type: string
         quota:
-          $ref: '#/components/schemas/k8s.io.apimachinery.pkg.api.resource.Quantity'
+          $ref: '#/components/schemas/.Quantity'
         quotaList:
           description: QuotaList are quotas used to set quota on multiple paths. Quotas
             should be separated with comma. Quotas in this list will be set to paths

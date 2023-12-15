@@ -29,15 +29,15 @@ import models.V1Time;
  * Condition explains the transitions on phase
  */
 @ApiModel(description = "Condition explains the transitions on phase")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class Condition {
   public static final String SERIALIZED_NAME_LAST_PROBE_TIME = "lastProbeTime";
   @SerializedName(SERIALIZED_NAME_LAST_PROBE_TIME)
-  private V1Time lastProbeTime = null;
+  private datetime lastProbeTime = null;
 
   public static final String SERIALIZED_NAME_LAST_TRANSITION_TIME = "lastTransitionTime";
   @SerializedName(SERIALIZED_NAME_LAST_TRANSITION_TIME)
-  private V1Time lastTransitionTime = null;
+  private datetime lastTransitionTime = null;
 
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -56,7 +56,7 @@ public class Condition {
   private String type = "";
 
 
-  public Condition lastProbeTime(V1Time lastProbeTime) {
+  public Condition lastProbeTime(datetime lastProbeTime) {
     
     this.lastProbeTime = lastProbeTime;
     return this;
@@ -69,17 +69,17 @@ public class Condition {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getLastProbeTime() {
+  public datetime getLastProbeTime() {
     return lastProbeTime;
   }
 
 
-  public void setLastProbeTime(V1Time lastProbeTime) {
+  public void setLastProbeTime(datetime lastProbeTime) {
     this.lastProbeTime = lastProbeTime;
   }
 
 
-  public Condition lastTransitionTime(V1Time lastTransitionTime) {
+  public Condition lastTransitionTime(datetime lastTransitionTime) {
     
     this.lastTransitionTime = lastTransitionTime;
     return this;
@@ -92,12 +92,12 @@ public class Condition {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Time getLastTransitionTime() {
+  public datetime getLastTransitionTime() {
     return lastTransitionTime;
   }
 
 
-  public void setLastTransitionTime(V1Time lastTransitionTime) {
+  public void setLastTransitionTime(datetime lastTransitionTime) {
     this.lastTransitionTime = lastTransitionTime;
   }
 

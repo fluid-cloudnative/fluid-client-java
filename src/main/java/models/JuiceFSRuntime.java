@@ -31,7 +31,7 @@ import models.RuntimeStatus;
  * JuiceFSRuntime is the Schema for the juicefsruntimes API
  */
 @ApiModel(description = "JuiceFSRuntime is the Schema for the juicefsruntimes API")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-30T14:39:14.140796+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-15T22:35:53.526622+08:00[Asia/Shanghai]")
 public class JuiceFSRuntime {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)
